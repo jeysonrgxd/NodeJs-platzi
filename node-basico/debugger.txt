@@ -1,0 +1,3 @@
+para ejecutar el debuguer ponemos antes del archivo a jecutar el --inspect esto abrira un puerto websockets que lo abriremos con gooogle chrome en el siguiente link chrome://inspect/#devices
+ya de ahi podemos utilizar la consola de para ver nuestro backend de node
+node --inspect http

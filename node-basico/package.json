@@ -1,0 +1,17 @@
+{
+  "name": "temas_platzi",
+  "version": "1.0.0",
+  "description": "Estos temas son de platzi",
+  "main": "global.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "platzi"
+  ],
+  "author": "Jeyson Gino Ramos Garcia",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^5.2.0"
+  }
+}
