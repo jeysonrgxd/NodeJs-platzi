@@ -2,6 +2,10 @@ const express = require("express")
 const app = express()
 const path = require("path")
 
+// traemos la base de datos
+const db = require('./db')
+db('mongodb+srv://jeysonrg:teamoinesx100pre@cluster0-s6ibv.mongodb.net/telegrom')
+
 // importamos el router que tendra todas la rutas conectado a cada componente
 const router = require('./network/routes')
 

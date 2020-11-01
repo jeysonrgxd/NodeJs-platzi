@@ -3,18 +3,18 @@
 const store = require('./store')
 
 // recive dos parametros , quien la añade y que es lo que añade
-function addMessage (user,message){
+function addMessage(user, message) {
 
-   return new Promise((resolve,reject)=>{
+   return new Promise((resolve, reject) => {
 
-      if(!user){
+      if (!user) {
          console.error('[messageController] No hay usuario o mensaje')
          return reject('Los datos son incorrectos')
       }
 
       const fullMessage = {
-         user:user,
-         message:message,
+         user: user,
+         message: message,
          date: new Date()
       }
       store.add(fullMessage)
@@ -23,13 +23,43 @@ function addMessage (user,message){
 
 }
 
-function getMessage(){
+function getMessage(filterUser) {
+   return new Promise((resolve, reject) => {
+      resolve(store.list(filterUser));
+   })
+}
+
+function updateMessage(id, message) {
+   return new Promise(async (resolve, reject) => {
+      if (!id || !message) {
+         reject('Invalid data')
+         return false
+      }
+      // llamamos ala funcion de storage que se conecta con la base de datos
+      const result = await store.updateText(id, message)
+      resolve(result)
+   })
+}
+
+function deleteMessage(id){
    return new Promise((resolve,reject)=>{
-      resolve(store.list());
+      if(!id){
+         reject('Id invalido')
+         return false
+      }
+      store.remove(id)
+         .then(()=>{
+            resolve()
+         })
+         .catch(e=>{
+            reject(e)
+         })
    })
 }
 
 module.exports = {
    addMessage,
-   getMessage
+   getMessage,
+   updateMessage,
+   deleteMessage
 }
