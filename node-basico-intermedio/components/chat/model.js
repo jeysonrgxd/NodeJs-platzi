@@ -7,24 +7,18 @@ const Schema = mongoose.Schema
 const mySchema = new Schema({
    // user: String,
    // utilizamo un tipo objectId
-   chat:{
-      type:Schema.ObjectId,
-      ref:'Chat',
-   },
-   user: {
-      type:Schema.ObjectId,
-      ref:'User'
-   },
-   message: {
-      type: String,
-      required: true
-   },
-   date: Date,
-   file:String
+   // utilizamos un array para tener una lista de objetos
+   users:[
+      {
+         type:Schema.ObjectId,
+         ref:'User'
+      }
+   ]
+  
 })
 
 // creamos un model para exportar el cual le pasamos al model al schema, quiero que todo lo que se cree tenga este schema y se guarde en la base de datos con este nombre
 
-const model = mongoose.model("Message",mySchema)
+const model = mongoose.model("Chat", mySchema)
 
 module.exports = model

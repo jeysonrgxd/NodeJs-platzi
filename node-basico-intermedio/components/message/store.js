@@ -14,25 +14,38 @@ const addMessage = (message) => {
 
 }
 
-const getMessage = async (filterUser) => {
+const getMessage = async (filterChat) => {
    // return list
 
-   // creamos un objeto filter para pasarselo al find de mongose
-   let find = {}
-   if(filterUser !== null){
-      find = {user:filterUser}
-   }
-   //el find si no le especificamos nada nos trae todos los documentos
-   const messages = await Model.find(find)
-   return messages
+   return new Promise((resolve, reject) => {
+      // creamos un objeto filter para pasarselo al find de mongose
+      let filter = {}
+      if (filterChat !== null) {
+         filter = { chat: filterChat }
+      }
+      //el find si no le especificamos nada nos trae todos los documentos
+      Model.find(filter)
+         // buscamos en cada elemento el object id (el que definimos en el esquema del mensage) del user y asi poder traer los datos del user
+         .populate('user')
+         // ejecutamos
+         .exec((err, populated) => {
+            if (err) {
+               reject(err)
+               return false
+            }
+            resolve(populated)
+
+         })
+   })
+
 }
 
-const updateText = async (id,message) => {
+const updateText = async (id, message) => {
    // const findMessage = await Model.findByIdAndUpdate()
 
    // nos devuelve un objeto de tipo Model message, pero con su cuerpo accesible mediante .message ._id
    const findMessage = await Model.findOne({
-      _id:id
+      _id: id
    })
 
    // const updateMessage = await Model.findOneAndUpdate({_id:id},{message},{new:true})
@@ -46,9 +59,9 @@ const updateText = async (id,message) => {
 
 }
 
-const removeMessage = async (id) =>{
+const removeMessage = async (id) => {
    const userRemove = await Model.deleteOne({
-      _id:id
+      _id: id
    })
 
    return userRemove
@@ -59,5 +72,5 @@ module.exports = {
    list: getMessage,
    updateText,
    remove: removeMessage
-   
+
 }

@@ -4,10 +4,29 @@ const { Router } = require("express")
 const router = Router()
 const controller = require('./controller')
 const response = require('../../network/response')
+const multer = require("multer")
+const path = require("path")
+
+// esto funciona bien en linux ya que reconoce el archivo y le pone por asi decirlo la extencion que pertenece
+// const upload = multer({
+//    dest: 'public/files/'
+// })
+
+// metodo recomendado para poder trabajar bien tanto en linux como en windows para reconer la extencion
+const storage = multer.diskStorage({
+   destination: 'public/files/',
+   filename: (req, file, cb) => {
+      cb(null, Date.now() + path.extname(file.originalname))
+   }
+})
+
+const upload = multer({
+   storage
+}) 
 
 router.get('/', function (req, res) {
 
-   const filterMessages = req.query.user || null
+   const filterMessages = req.query.chat || null
 
    // res.header({
    //    "custom-header": "Nuestro valor personalizado"
@@ -24,8 +43,10 @@ router.get('/', function (req, res) {
 });
 
 // ruta para creacion de messages
-router.post('/', function (req, res) {
-   controller.addMessage(req.body.user, req.body.message)
+router.post('/', upload.single("file"), function (req, res) {
+   console.log(req.file);
+
+   controller.addMessage(req.body.chat,req.body.user, req.body.message,req.file)
       .then((fullMessage) => {
 
          response.success(req, res, fullMessage, 201)
