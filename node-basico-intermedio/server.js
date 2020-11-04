@@ -1,6 +1,11 @@
 const express = require("express")
 const app = express()
+const server = require('http').Server(app)
+
 const path = require("path")
+
+// traemos el sockter
+const socket = require('./socket')
 
 // traemos la base de datos
 const db = require('./db')
@@ -13,6 +18,9 @@ const router = require('./network/routes')
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 
+// le pasamos el servidor al socket
+socket.connect(server)
+
 // ejecutamos pasando la app ya que dentro de esa app se encuentra .use 
 router(app)
 
@@ -21,6 +29,6 @@ const publicDirectory = path.join(__dirname, './public')
 app.use('/app',express.static(publicDirectory));
 
 // corremos el servidor
-app.listen(3000, () => {
+server.listen(3000, () => {
    console.log(`Server started on port ${process.env.PORT || 3000}`)
 })

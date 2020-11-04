@@ -1,9 +1,10 @@
 // aca ira la logica de negocio validaciones requisitos eliminar aumentar algo , requerimientos del cliente de como funcionara o que ara
-
 const store = require('./store')
+// nos traemos solo el objeto socket el cual tiene la propiedad io que utilizaremos para emitir los mensaje
+const { socket } = require('../../socket')
 
 // recive dos parametros , quien la añade y que es lo que añade
-function addMessage(chat ,user, message,file) {
+function addMessage(chat, user, message, file) {
 
    return new Promise((resolve, reject) => {
 
@@ -13,18 +14,22 @@ function addMessage(chat ,user, message,file) {
       }
 
       let fileUrl = '';
-      if(file) {
+      if (file) {
          fileUrl = 'http://localhost:3000/app/files/' + file.filename
       }
 
       const fullMessage = {
-         chat:chat,
+         chat: chat,
          user: user,
          message: message,
          date: new Date(),
-         file:fileUrl
+         file: fileUrl
       }
       store.add(fullMessage)
+
+      // emitimos los mensajes atravez de nuestro socket creado
+      socket.io.emit('message', fullMessage)
+
       resolve(fullMessage)
    })
 
@@ -48,17 +53,17 @@ function updateMessage(id, message) {
    })
 }
 
-function deleteMessage(id){
-   return new Promise((resolve,reject)=>{
-      if(!id){
+function deleteMessage(id) {
+   return new Promise((resolve, reject) => {
+      if (!id) {
          reject('Id invalido')
          return false
       }
       store.remove(id)
-         .then(()=>{
+         .then(() => {
             resolve()
          })
-         .catch(e=>{
+         .catch(e => {
             reject(e)
          })
    })

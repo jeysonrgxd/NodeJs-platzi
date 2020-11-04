@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,26 +9,28 @@
    <script src="/socket.io/socket.io.js"></script>
 </head>
 <style>
- body{
-background-color:#333;
-color:white;
-}
+   body {
+      background-color: #333;
+      color: white;
+   }
 </style>
+
 <body>
    <h1>Mira la consola</h1>
 
    <script>
-      let socket = io.connect('http://localhost:3000',{
+      let socket = io.connect('http://localhost:3000', {
          // aseguramos que las conexiones sean ciempre nuevas
-         forceNew:true
+         forceNew: true
       })
 
       // para saber que nos llegan los mensaje utilizamos socket.on, con esto escuchamos mensajes
-      socket.on("mensaje",function(data){
+      socket.on("message", function (data) {
          console.log(data)
       })
 
 
    </script>
 </body>
+
 </html>
