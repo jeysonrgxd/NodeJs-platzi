@@ -1,6 +1,8 @@
 const express = require("express")
 const app = express()
 const server = require('http').Server(app)
+const cors = require("cors")
+const config = require("./config/config")
 
 const path = require("path")
 
@@ -9,7 +11,7 @@ const socket = require('./socket')
 
 // traemos la base de datos
 const db = require('./db')
-db('mongodb+srv://jeysonrg:teamoinesx100pre@cluster0-s6ibv.mongodb.net/telegrom')
+db(config.mongoURL)
 
 // importamos el router que tendra todas la rutas conectado a cada componente
 const router = require('./network/routes')
@@ -17,7 +19,7 @@ const router = require('./network/routes')
 // configuramos los middleware para trabjar con datos json y formularios
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
-
+app.use(cors())
 // le pasamos el servidor al socket
 socket.connect(server)
 
