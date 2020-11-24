@@ -2,7 +2,7 @@ const { Router } = require("express")
 const router = Router()
 const controller = require('./controller')
 const response = require('../../network/response')
-
+     
 router.get('/', (req, res) => {
    controller.listUsers()
       .then(data => {
