@@ -1,9 +1,8 @@
 const { createServer } = require('http')
 const server = createServer()
 
-// el servidor tambien funciona con eventos
 server.on('request', (req, res) => {
-   // verificamos que metodo es
+
    if (req.method == 'POST' && req.url == "/echo") {
 
       let body = []
@@ -18,20 +17,26 @@ server.on('request', (req, res) => {
       ]
 
       req.on('data', chunks =>{
+         // input: 10/12/1994
          body.push(chunks)
       })
       .on('end',()=>{
+
          let fechaNacimiento = new Date(Buffer.concat(body).toString())
          let dia = dias[fechaNacimiento.getDay()]
+
          res.writeHead(200, { 'Content-Type': 'text/plain' })
          res.end(`El dia en que naciste es: ${dia}`)
+
       })
 
       
 
    } else {
+
       res.writeHead(400, { 'Content-Type': 'application/json' })
       res.end(JSON.stringify({ ok: false, mensaje: "No se econtre la pagina" }))
+      
    }
 })
 
