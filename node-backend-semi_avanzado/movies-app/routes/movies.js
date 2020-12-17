@@ -10,7 +10,7 @@ function moviesApi(app) {
    // La unica responsabilidad de las rutas es saber como recivir parametros y como se los envia a los servicios mientras que los servicios si saben que hacer con todos estos parametros y estos datos saben devolver la informacion que le estamos requiriendo
    const moviesService = new MoviesService();
 
-   // alimentamos el rauter con als otras rutas
+   // alimentamos el rauter con las otras rutas
    router.get("/", async function (req, res, next) {
       const { tags } = req.query
 
