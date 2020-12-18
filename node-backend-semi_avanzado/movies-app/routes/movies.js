@@ -29,7 +29,7 @@ function moviesApi(app) {
       }
    })
 
-   router.get("/:movieID", async function (req, res, next) {
+   router.get("/:movieId", async function (req, res, next) {
       const { movieId } = req.params
 
       //  como es codigo sincrono asemos el try catch

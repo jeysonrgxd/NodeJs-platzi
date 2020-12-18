@@ -6,6 +6,9 @@ const { config } = require('./config/index');
 // importamos nuesta funcion que generara nuestra rutas pasandole la app de express
 const moviesApi = require("./routes/movies")
 
+// traemos los middleware
+app.use(express.json())
+
 // ejecutamos la funcion el cual generara nuestras rutas con la logica pasandole ala funcion la app
 moviesApi(app);
 

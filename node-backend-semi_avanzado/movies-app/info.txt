@@ -3,3 +3,6 @@ https://github.com/glrodasz/platzi-backend-node/tree/conexion-a-mongo-atlas
 
 Cadena de conexion url de mongoatlas para conexion de tu aplicacion o api rest
 mongodb+srv://jeysonrg:teamoinesx100pre@cluster0.s6ibv.mongodb.net/platzivideos_db?retryWrites=true&w=majority
+
+Operaciones crud en mongo documentacion
+https://docs.mongodb.com/manual/crud/#read-operations
